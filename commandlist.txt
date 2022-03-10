@@ -1,7 +1,7 @@
-new - Start a new game 
-join - Join the current game 
-start - Start the game 
-leave - Leave the game you're in 
+Yeni - Yeni oyuna başlamaq
+Qoşulmaq - Oyuna qoşulmaq
+Başlat - Oyunu başlat
+Çıxmaq - Sən oyundan çıxırsan
 close - Close the game lobby 
 open - Open the game lobby 
 kill - Terminate the game 
