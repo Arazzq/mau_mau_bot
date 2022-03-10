@@ -57,7 +57,7 @@ def notify_me(bot, update):
     if update.message.chat.type == 'private':
         send_async(bot,
                    chat_id,
-                   text=_("Send this command in a group to be notified "
+                   text=_("Bu əmri bildiriləcək şəkildə göndər "
                           "when a new game is started there."))
     else:
         try:
@@ -67,8 +67,8 @@ def notify_me(bot, update):
 
 
 @user_locale
-def new_game(bot, update):
-    """Handler for the /new command"""
+def yeni_game(bot, update):
+    """Handler for the /yeni command"""
     chat_id = update.message.chat_id
 
     if update.message.chat.type == 'private':
@@ -378,7 +378,7 @@ def start_game(bot, update, args, job_queue):
             choice = [[InlineKeyboardButton(text=_("Make your choice!"), switch_inline_query_current_chat='')]]
             first_message = (
                 __("First player: {name}\n"
-                   "Use /close to stop people from joining the game.\n"
+                   "Use /Bağla to stop people from joining the game.\n"
                    "Enable multi-translations with /enable_translations",
                    multi=game.translate)
                 .format(name=display_name(game.current_player.user)))
@@ -698,7 +698,7 @@ def process_result(bot, update, job_queue):
         nextplayer_message = (
             __("Next player: {name}", multi=game.translate)
             .format(name=display_name(game.current_player.user)))
-        choice = [[InlineKeyboardButton(text=_("Make your choice!"), switch_inline_query_current_chat='')]]
+        choice = [[InlineKeyboardButton(text=_("Seçiminizi edin"), switch_inline_query_current_chat='')]]
         send_async(bot, chat.id,
                         text=nextplayer_message,
                         reply_markup=InlineKeyboardMarkup(choice))
@@ -712,7 +712,7 @@ def reset_waiting_time(bot, player):
     if player.waiting_time < WAITING_TIME:
         player.waiting_time = WAITING_TIME
         send_async(bot, chat.id,
-                   text=__("Waiting time for {name} has been reset to {time} "
+                   text=__("Gözləmə vaxtı {name} sıfırlanıb {time} "
                            "seconds", multi=player.game.translate)
                    .format(name=display_name(player.user), time=WAITING_TIME))
 
@@ -722,18 +722,18 @@ dispatcher.add_handler(InlineQueryHandler(reply_to_query))
 dispatcher.add_handler(ChosenInlineResultHandler(process_result, pass_job_queue=True))
 dispatcher.add_handler(CallbackQueryHandler(select_game))
 dispatcher.add_handler(CommandHandler('start', start_game, pass_args=True, pass_job_queue=True))
-dispatcher.add_handler(CommandHandler('new', new_game))
-dispatcher.add_handler(CommandHandler('kill', kill_game))
-dispatcher.add_handler(CommandHandler('join', join_game))
-dispatcher.add_handler(CommandHandler('leave', leave_game))
-dispatcher.add_handler(CommandHandler('kick', kick_player))
-dispatcher.add_handler(CommandHandler('open', open_game))
-dispatcher.add_handler(CommandHandler('close', close_game))
+dispatcher.add_handler(CommandHandler('yeni', new_game))
+dispatcher.add_handler(CommandHandler('Öldür', kill_game))
+dispatcher.add_handler(CommandHandler('qoşul', join_game))
+dispatcher.add_handler(CommandHandler('çıx', leave_game))
+dispatcher.add_handler(CommandHandler('Təpiklə', kick_player))
+dispatcher.add_handler(CommandHandler('Aç', open_game))
+dispatcher.add_handler(CommandHandler('Bağla', close_game))
 dispatcher.add_handler(CommandHandler('enable_translations',
                                       enable_translations))
 dispatcher.add_handler(CommandHandler('disable_translations',
                                       disable_translations))
-dispatcher.add_handler(CommandHandler('skip', skip_player))
+dispatcher.add_handler(CommandHandler('keç', skip_player))
 dispatcher.add_handler(CommandHandler('notify_me', notify_me))
 simple_commands.register()
 settings.register()
